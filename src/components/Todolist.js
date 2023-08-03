@@ -20,6 +20,11 @@ const Todolist = () => {
         setTodos(newTodos);
     }
 
+    const deleteTodo = (id) => {
+        const newTodos = todos.filter(todo => todo.id !== id);
+        setTodos(newTodos);
+    }
+
     return (
         <div className="todo-list">
             <TodoForm addFunction={addTodo}/>
@@ -30,6 +35,7 @@ const Todolist = () => {
                             key={todo.id}
                             item={todo}
                             updateFunction={updateTodo}
+                            deleteFunction={deleteTodo}
                         />
                     )
                 })}

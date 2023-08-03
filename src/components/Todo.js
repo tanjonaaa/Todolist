@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './Todo.css';
 
-const Todo = ({ item, updateFunction }) => {
+const Todo = ({ item, updateFunction, deleteFunction }) => {
     const [id, setId] = useState(item.id);
     const [name, setName] = useState(item.title);
     const [isDone, setIsDone] = useState(item.done);
@@ -45,6 +45,11 @@ const Todo = ({ item, updateFunction }) => {
         }
     }
 
+    const deleteTodo = (e) => {
+        e.stopPropagation();
+        deleteFunction(id);
+    }
+
     if (!isEditing) {
         return (
             <li className={isDone ? "done" : ""}>
@@ -62,13 +67,11 @@ const Todo = ({ item, updateFunction }) => {
                 }>
                     Modifier
                 </button>
-                {/* <button
-                    onClick={e => {
-                        deleteFunction(item.id)
-                    }}
+                <button
+                    onClick={deleteTodo}
                 >
                     Supprimer
-                </button> */}
+                </button>
             </li>
         );
     } else {
