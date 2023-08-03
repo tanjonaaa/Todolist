@@ -7,40 +7,29 @@ import TodoForm from "./TodoForm";
 const Todolist = () => {
     const [todos, setTodos] = useState([]);
 
-    const deleteTodo = (toDelete) => {
-        const newTodos = todos.filter(
-            todo => {
-                if(todo.id !== toDelete){
-                    return todo;
-                }
-            }
-        );
-        
-        setTodos(newTodos);
+    const addTodo = (todo) => {
+        setTodos([...todos, todo]);
     }
 
-    const deleteAllDone = () => {
-        const newTodos = todos.filter(
-            todo => {
-                if(todo.done === false){
-                    return todo;
-                }
-            }
+    const updateTodo = (newTodo) => {
+        const newTodos = todos;
+        const index = todos.indexOf(
+            (todos.filter(todo => todo.id == newTodo.id))[0]
         );
-        
+        newTodos[index] = newTodo;
         setTodos(newTodos);
     }
 
     return (
         <div className="todo-list">
-            <TodoForm addFunction={setTodos} deleteFunction={deleteAllDone}/>
+            <TodoForm addFunction={addTodo}/>
             <ul>
                 {todos.map(todo => {
                     return (
                         <Todo
                             key={todo.id}
                             item={todo}
-                            deleteFunction={deleteTodo}
+                            updateFunction={updateTodo}
                         />
                     )
                 })}

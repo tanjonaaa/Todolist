@@ -9,14 +9,11 @@ const TodoForm = ({ addFunction,  deleteFunction}) => {
         e.stopPropagation();
         if (value.trim()) {
             addFunction(
-                previous => [
-                    ...previous,
-                    {
-                        id: uuidv4(),
-                        title: value.trim(),
-                        done: false
-                    }
-                ]
+                {
+                    id: uuidv4(),
+                    title: value.trim(),
+                    done: false
+                }
             );
             setValue("");
         }
@@ -34,11 +31,6 @@ const TodoForm = ({ addFunction,  deleteFunction}) => {
                 onClick={insertTodo}
             >
                 Ajouter
-            </button>
-            <button
-                onClick={deleteFunction}
-            >
-                Supprimer toutes les tâches faites
             </button>
         </div>
     );

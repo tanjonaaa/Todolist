@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Todo.css';
 
-const Todo = ({ item, deleteFunction }) => {
+const Todo = ({ item, updateFunction }) => {
+    const [id, setId] = useState(item.id);
     const [name, setName] = useState(item.title);
     const [isDone, setIsDone] = useState(item.done);
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(
+        () => {
+            updateFunction(
+                {
+                    id: id,
+                    title: name,
+                    done: isDone
+                }
+            );
+        }, [name, isDone]
+    );
+
+    const updateIsDone = (e) => {
+        e.stopPropagation();
+        setIsDone(!isDone);
+    }
 
     const editTodo = (e) => {
         e.stopPropagation();
@@ -21,10 +39,7 @@ const Todo = ({ item, deleteFunction }) => {
                 <input
                     type="checkbox"
                     defaultChecked={isDone}
-                    onChange={(e) => {
-                        e.stopPropagation();
-                        setIsDone(!isDone);
-                    }}
+                    onChange={updateIsDone}
                 />
                 <button onClick={
                     e => {
@@ -34,13 +49,13 @@ const Todo = ({ item, deleteFunction }) => {
                 }>
                     Modifier
                 </button>
-                <button
+                {/* <button
                     onClick={e => {
                         deleteFunction(item.id)
                     }}
                 >
                     Supprimer
-                </button>
+                </button> */}
             </li>
         );
     } else {
