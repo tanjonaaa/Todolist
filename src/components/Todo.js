@@ -16,7 +16,20 @@ const Todo = ({ item, updateFunction }) => {
                     done: isDone
                 }
             );
-        }, [name, isDone]
+        }, [isDone]
+    );
+
+    useEffect(() => {
+        if(!isEditing){
+            updateFunction(
+                {
+                    id: id,
+                    title: name,
+                    done: isDone
+                }
+            );
+        }
+    }, [name]
     );
 
     const updateIsDone = (e) => {
@@ -24,7 +37,7 @@ const Todo = ({ item, updateFunction }) => {
         setIsDone(!isDone);
     }
 
-    const editTodo = (e) => {
+    const updateName = (e) => {
         e.stopPropagation();
         const trimmed = name.trim();
         if (trimmed) {
@@ -69,10 +82,10 @@ const Todo = ({ item, updateFunction }) => {
                 <input
                     type="checkbox"
                     defaultChecked={isDone}
-                    onChange={(e) => setIsDone(!isDone)}
+                    onChange={updateIsDone}
                 />
                 <button
-                    onClick={editTodo}
+                    onClick={updateName}
                 >
                     Enregistrer
                 </button>
